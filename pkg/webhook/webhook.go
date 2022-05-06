@@ -216,7 +216,7 @@ func (wh *WebHook) Start(stopCh <-chan struct{}) error {
 
 	go func() {
 		glog.Info("Starting the Spark admission webhook server")
-		if err := wh.server.ListenAndServeTLS("", ""); err != nil && err != http.ErrServerClosed {
+		if err := wh.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			glog.Errorf("error while serving the Spark admission webhook: %v\n", err)
 		}
 	}()

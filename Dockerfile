@@ -36,6 +36,11 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o /usr/bin
 
 FROM ${SPARK_IMAGE}
 COPY --from=builder /usr/bin/spark-operator /usr/bin/
+
+# 替换 debian 源
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
+RUN echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
+
 RUN apt-get update \
     && apt-get install -y openssl curl tini \
     && rm -rf /var/lib/apt/lists/*
