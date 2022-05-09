@@ -387,6 +387,9 @@ func (wh *WebHook) selfRegistration(webhookConfigName string) error {
 		},
 		FailurePolicy:     &wh.failurePolicy,
 		NamespaceSelector: wh.selector,
+		ObjectSelector: &metav1.LabelSelector{
+			MatchLabels: map[string]string{"sparkoperator.k8s.io/launched-by-spark-operator": "true"},
+		},
 	}
 
 	validatingWebhook := v1beta1.ValidatingWebhook{
